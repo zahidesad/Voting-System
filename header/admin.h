@@ -7,6 +7,7 @@ class Admin : public Person {
 public:
     Admin(int id, const string& name, const string& username, const string& password, const string& mail);
     Admin();
+
    
 };
 

@@ -8,22 +8,24 @@
 #include "vote.h"
 #include <vector>
 
-class Database {
+class Database
+{
 public:
-    static vector<Person> users;
+    static vector<Person *> users;
     static int userCount;
     static int userID;
 
     static vector<Vote> votes;
-    static int voteCount;
     static int voteID;
 
     static vector<Topic> topics;
-    static int topicCount;
     static int topicID;
 
-    bool isUser(const Person* person); 
-
+    static Person *login(const string &username, const string &password);
+    static void insertPerson(const Person &person);
+    static int readPerson();
+    static int deletePerson(const int id);
+    static int updatePersonInformation(const int id, const string &newName, const string &newUsername, const string &newPassword, const string &newMail);
 };
 
 #endif

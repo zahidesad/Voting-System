@@ -8,7 +8,6 @@ Topic::Topic(int id, const string &topicName, const vector<string> &topicOptions
     : id(id), topicName(topicName), topicOptions(topicOptions), category(category), isOpen(isOpen)
 {
     Database::topics.push_back(*this);
-    Database::topicCount++;
 }
 Topic::Topic() {}
 

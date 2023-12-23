@@ -50,6 +50,7 @@
         "xtr1common": "cpp",
         "xutility": "cpp",
         "vector": "cpp",
-        "person.h": "c"
+        "person.h": "c",
+        "fstream": "cpp"
     }
 }

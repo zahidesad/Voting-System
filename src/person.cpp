@@ -8,9 +8,8 @@ using namespace std;
 Person::Person(int id, const string &name, const string &username, const string &password, const string &mail)
     : id(id), name(name), username(username), password(password), mail(mail)
 {
-    Database::users.push_back(*this);
-    Database::userCount++;
-    // İstersek burada insertPerson fonksiyonunu çağırabiliriz.
+    Database::users.push_back(this);
+    Database::insertPerson(*this);
 }
 Person::Person()
 {
