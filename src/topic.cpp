@@ -1,0 +1,108 @@
+#include "../header/topic.h"
+#include "../header/database.h"
+#include <iostream>
+
+using namespace std;
+
+Topic::Topic(int id, const string &topicName, const vector<string> &topicOptions, Categories category, bool isOpen)
+    : id(id), topicName(topicName), topicOptions(topicOptions), category(category), isOpen(isOpen)
+{
+    Database::topics.push_back(*this);
+    Database::topicCount++;
+}
+Topic::Topic() {}
+
+int Topic::getOptionLength() const
+{
+    int totalOptions = 0;
+    for (const auto &topicOption : topicOptions)
+    {
+        totalOptions++;
+    }
+    return totalOptions;
+}
+
+// Getter functions
+int Topic::getId() const
+{
+    return id;
+}
+
+string Topic::getTopicName() const
+{
+    return topicName;
+}
+
+const vector<string> &Topic::getTopicOptions() const
+{
+    return topicOptions;
+}
+
+bool Topic::getIsOpen() const
+{
+    return isOpen;
+}
+
+Topic::Categories Topic::getCategory() const
+{
+    return category;
+}
+
+// Setter functions
+void Topic::setId(int newId)
+{
+    id = newId;
+}
+
+void Topic::setTopicName(const string &newTopicName)
+{
+    topicName = newTopicName;
+}
+
+void Topic::setTopicOptions(const vector<string> &newTopicOptions)
+{
+    topicOptions = newTopicOptions;
+}
+
+void Topic::setIsOpen(bool newIsOpen)
+{
+    isOpen = newIsOpen;
+}
+
+void Topic::setCategory(Categories newCategory)
+{
+    category = newCategory;
+}
+
+int Topic::findVoteCountForTopic() const
+{
+    int total = 0;
+
+    for (const auto &vote : Database::votes)
+    {
+        if (vote.getTopic().getId() == id)
+        {
+            total++;
+        }
+    }
+    return total;
+}
+
+int *findVoteCountForTopicOption(const Topic *topic)
+{
+    int *total = (int*)malloc(topic->getOptionLength()*sizeof(int));
+
+    for (int i = 0; i < topic->getOptionLength(); i++) {
+        total[i] = 0;
+    }
+
+    for (int i = 0; i < Database::votes.size(); i++)
+    {
+        if (Database::votes[i].getTopic().getId() == (topic->getId()))
+        {
+            total[Database::votes[i].getTopicOptionIndex()]++;
+        }
+    }
+
+    return total;
+}
