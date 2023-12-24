@@ -217,10 +217,157 @@ int Database::deletePerson(int id)
 }
 
 int Database::updatePersonInformation(const int id, const string &newName, const string &newUsername, const string &newPassword, const string &newMail)
+
 {
     Database::deletePerson(id);
     if (!flagForDeleteAndUpdate)
     {
         Person person(id, newName, newUsername, newPassword, newMail);
+    }
+}
+
+void Database::showAllTopics()
+{
+    int choice = 0;
+    int countCategory1 = 0;
+    int countCategory2 = 0;
+    int countCategory3 = 0;
+    int countCategory4 = 0;
+
+    cout << "\n1- TECHNOLOGY\n";
+    cout << "2- ECONOMY\n";
+    cout << "3- POLITICS\n";
+    cout << "4- FSMVU\n";
+    Color_White();
+    cout << "\nPlease choose which category of topics you want to view : ";
+    Color_Reset();
+    cin >> choice;
+
+    switch (choice)
+    {
+    case 1:
+        Color_Green();
+        cout << "\n--------------- TECHNOLOGY ---------------\n\n";
+        Color_Reset();
+        for (int i = 0; i < Database::topics.size(); i++)
+        {
+            if (topics[i].getCategory() == 0)
+            {
+                countCategory1++;
+                cout << "ID of the topic : " << topics[i].getId() << '\n';
+                cout << "Name of the topic : " << topics[i].getTopicName() << '\n';
+                cout << "Number of option of the topic : " << topics[i].getOptionLength() << '\n';
+                cout << "Category of the topic : " << Topic::categories_names[topics[i].getCategory()] << '\n';
+                for (int j = 0; j < topics[i].getOptionLength(); j++)
+                {
+                    cout << j + 1 << ". Option of the topic : " << topics[i].getTopicOptions()[j] << '\n';
+                }
+                Color_Blue();
+                cout << "-------------------------------\n";
+                Color_Reset();
+            }
+        }
+        if (countCategory1 == 0)
+        {
+            Color_Red();
+            cout << "\nYou don't have a topic in this category\n";
+            Color_Reset();
+        }
+        return;
+    case 2:
+        Color_Green();
+        cout << "\n--------------- ECONOMY ---------------\n\n";
+        Color_Reset();
+        for (int i = 0; i < Database::topics.size(); i++)
+        {
+            if (topics[i].getCategory() == 1)
+            {
+                countCategory2++;
+                cout << "ID of the topic : " << topics[i].getId() << '\n';
+                cout << "Name of the topic : " << topics[i].getTopicName() << '\n';
+                cout << "Number of option of the topic : " << topics[i].getOptionLength() << '\n';
+                cout << "Category of the topic : " << Topic::categories_names[topics[i].getCategory()] << '\n';
+                for (int j = 0; j < topics[i].getOptionLength(); j++)
+                {
+                    cout << j + 1 << ". Option of the topic : " << topics[i].getTopicOptions()[j] << '\n';
+                }
+                Color_Blue();
+                cout << "-------------------------------\n";
+                Color_Reset();
+            }
+        }
+        if (countCategory2 == 0)
+        {
+            Color_Red();
+            cout << "\nYou don't have a topic in this category\n";
+            Color_Reset();
+        }
+        return;
+    case 3:
+        Color_Green();
+        cout << "\n--------------- POLITICS ---------------\n\n";
+        Color_Reset();
+        for (int i = 0; i < Database::topics.size(); i++)
+        {
+            if (topics[i].getCategory() == 2)
+            {
+                countCategory3++;
+                cout << "ID of the topic : " << topics[i].getId() << '\n';
+                cout << "Name of the topic : " << topics[i].getTopicName() << '\n';
+                cout << "Number of option of the topic : " << topics[i].getOptionLength() << '\n';
+                cout << "Category of the topic : " << Topic::categories_names[topics[i].getCategory()] << '\n';
+                for (int j = 0; j < topics[i].getOptionLength(); j++)
+                {
+                    cout << j + 1 << ". Option of the topic : " << topics[i].getTopicOptions()[j] << '\n';
+                }
+                Color_Blue();
+                cout << "-------------------------------\n";
+                Color_Reset();
+            }
+        }
+        if (countCategory3 == 0)
+        {
+            Color_Red();
+            cout << "\nYou don't have a topic in this category\n";
+            Color_Reset();
+        }
+        return;
+
+    case 4:
+        Color_Green();
+        cout << "\n--------------- FSMVU ---------------\n\n";
+        Color_Reset();
+        for (int i = 0; i < Database::topics.size(); i++)
+        {
+            if (topics[i].getCategory() == 3)
+            {
+                countCategory4++;
+                cout << "ID of the topic : " << topics[i].getId() << '\n';
+                cout << "Name of the topic : " << topics[i].getTopicName() << '\n';
+                cout << "Number of option of the topic : " << topics[i].getOptionLength() << '\n';
+                cout << "Category of the topic : " << Topic::categories_names[topics[i].getCategory()] << '\n';
+                for (int j = 0; j < topics[i].getOptionLength(); j++)
+                {
+                    std::cout << j + 1 << ". Option of the topic : " << topics[i].getTopicOptions()[j] << '\n';
+                }
+                Color_Blue();
+                cout << "-------------------------------\n";
+                Color_Reset();
+            }
+        }
+        if (countCategory4 == 0)
+        {
+            Color_Red();
+            cout << "\nYou don't have a topic in this category\n";
+            Color_Reset();
+        }
+        return;
+    default:
+        Color_Red();
+        cout << "Invalid option. Please select [1-4]\n";
+        Color_Reset();
+        while (cin.get() != '\n')
+            ;
+        break;
     }
 }

@@ -11,6 +11,12 @@ Topic::Topic(int id, const string &topicName, const vector<string> &topicOptions
 }
 Topic::Topic() {}
 
+unordered_map<Topic::Categories, string> Topic::categories_names = {
+    {Topic::TECHNOLOGY, "TECHNOLOGY"},
+    {Topic::ECONOMY, "ECONOMY"},
+    {Topic::POLITICS, "POLITICS"},
+    {Topic::FSMVU, "FSMVU"}};
+
 int Topic::getOptionLength() const
 {
     int totalOptions = 0;
@@ -89,9 +95,10 @@ int Topic::findVoteCountForTopic() const
 
 int *findVoteCountForTopicOption(const Topic *topic)
 {
-    int *total = (int*)malloc(topic->getOptionLength()*sizeof(int));
+    int *total = (int *)malloc(topic->getOptionLength() * sizeof(int));
 
-    for (int i = 0; i < topic->getOptionLength(); i++) {
+    for (int i = 0; i < topic->getOptionLength(); i++)
+    {
         total[i] = 0;
     }
 

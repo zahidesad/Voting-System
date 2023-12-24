@@ -51,6 +51,9 @@
         "xutility": "cpp",
         "vector": "cpp",
         "person.h": "c",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "unordered_map": "cpp",
+        "list": "cpp",
+        "xhash": "cpp"
     }
 }

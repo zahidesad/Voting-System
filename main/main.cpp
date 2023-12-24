@@ -5,6 +5,7 @@
 #include "../src/topic.cpp"
 #include "../src/vote.cpp"
 #include "../src/database.cpp"
+#include "../Colors/color.cpp"
 
 using namespace std;
 
@@ -58,5 +59,9 @@ int main()
     // Database::deletePerson(1);
     //Database::updatePersonInformation(0, "Test", "test", "123", "test@gmail.com");
     //cout << "User Count: " << testUserCount << endl;
+
+    Database::showAllTopics();
+    
+
     return 0;
 }
