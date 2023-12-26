@@ -4,9 +4,10 @@
 
 using namespace std;
 
-Topic::Topic(int id, const string &topicName, const vector<string> &topicOptions, Categories category, bool isOpen)
-    : id(id), topicName(topicName), topicOptions(topicOptions), category(category), isOpen(isOpen)
+Topic::Topic(const string &topicName, const vector<string> &topicOptions, Categories category, bool isOpen)
+    : id(Database::topicID), topicName(topicName), topicOptions(topicOptions), category(category), isOpen(isOpen)
 {
+    Database::topicID++;
     Database::topics.push_back(*this);
 }
 Topic::Topic() {}
@@ -79,13 +80,13 @@ void Topic::setCategory(Categories newCategory)
     category = newCategory;
 }
 
-int Topic::findVoteCountForTopic() const
+int Topic::findVoteCountForTopic(const Topic *topic)
 {
     int total = 0;
 
     for (const auto &vote : Database::votes)
     {
-        if (vote.getTopic().getId() == id)
+        if (vote.getTopic().getId() == topic->getId())
         {
             total++;
         }
@@ -93,7 +94,7 @@ int Topic::findVoteCountForTopic() const
     return total;
 }
 
-int *findVoteCountForTopicOption(const Topic *topic)
+int *Topic::findVoteCountForTopicOption(const Topic *topic)
 {
     int *total = (int *)malloc(topic->getOptionLength() * sizeof(int));
 

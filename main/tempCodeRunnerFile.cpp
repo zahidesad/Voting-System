@@ -1,1 +1,1 @@
-testUserCount
+instanceof <Admin>(account)

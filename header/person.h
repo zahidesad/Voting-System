@@ -3,6 +3,7 @@
 
 using namespace std;
 #include <string>
+#include <iostream>
 
 class Person
 {
@@ -12,9 +13,11 @@ private:
     string username;
     string password;
     string mail;
+    int isAdmin;
 
+    friend int checkAdmin(Person *person);
 public:
-    Person(int id, const string &name, const string &username, const string &password, const string &mail);
+    Person(int id, const string &name, const string &username, const string &password, const string &mail, const int &isAdmin);
     Person();
     virtual ~Person();
     // Getter functions
@@ -31,5 +34,6 @@ public:
     void setPassword(const string &newPassword);
     void setMail(const string &newMail);
 };
+
 
 #endif

@@ -5,8 +5,8 @@
 using namespace std;
 
 // Constructor
-Person::Person(int id, const string &name, const string &username, const string &password, const string &mail)
-    : id(id), name(name), username(username), password(password), mail(mail)
+Person::Person(int id, const string &name, const string &username, const string &password, const string &mail, const int &isAdmin)
+    : id(id), name(name), username(username), password(password), mail(mail), isAdmin(isAdmin)
 {
     Database::users.push_back(this);
     Database::insertPerson(*this);
@@ -18,7 +18,16 @@ Person::Person()
 Person::~Person()
 {
 }
-
+int checkAdmin(Person *person) // friend function
+{
+    if (person->isAdmin == 1 || person->getId() == 0)
+    {
+        person->isAdmin = 1;
+        return 1;
+    }
+    person->isAdmin = 0;
+    return 0;
+}
 // Getter functions
 int Person::getId() const
 {

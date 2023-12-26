@@ -19,7 +19,7 @@ public:
         FSMVU // My university name
     };
 
-    Topic(int id, const string &topicName, const vector<string> &topicOptions, Categories category, bool isOpen);
+    Topic(const string &topicName, const vector<string> &topicOptions, Categories category, bool isOpen);
     Topic();
 
     static unordered_map<Categories, string> categories_names;
@@ -39,8 +39,9 @@ public:
     void setIsOpen(bool newIsOpen);
     void setCategory(Categories newCategory);
 
-    int findVoteCountForTopic() const;
-    vector<int> findVoteCountForTopicOption() const;
+    static int findVoteCountForTopic(const Topic *topic);
+    static int *findVoteCountForTopicOption(const Topic *topic);
+    
 
 private:
     int id;

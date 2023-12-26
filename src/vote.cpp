@@ -3,7 +3,7 @@
 #include <iostream>
 
 Vote::Vote(int id, Person voter, Topic topic, int topicOptionIndex)
-    : id(id), voter(voter), topic(topic), topicOptionIndex(topicOptionIndex) {}
+    : id(Database::voteID), voter(voter), topic(topic), topicOptionIndex(topicOptionIndex) {}
 Vote vote() {}
 
 Vote createVote(int id, Person voter, Topic topic, int topicOptionIndex)
@@ -11,8 +11,10 @@ Vote createVote(int id, Person voter, Topic topic, int topicOptionIndex)
     for (const auto &existingVote : Database::votes)
     {
         if ((existingVote.getTopic().getId() == topic.getId()) && (existingVote.getVoter().getId() == voter.getId()))
-        {
+        {   
+            Color_Red();
             cout << "\nYou have already voted for this topic!\n";
+            Color_Reset();
             return Vote(-1, Person(), Topic(), -1); // Return an empty vote with id -1
         }
     }
@@ -21,7 +23,10 @@ Vote createVote(int id, Person voter, Topic topic, int topicOptionIndex)
     {
         Vote vote(id, voter, topic, topicOptionIndex);
         Database::votes.push_back(vote);
+        Database::voteID++;
+        Color_Green();
         cout << "\nYou have voted successfully.\n";
+        Color_Reset();
         return vote;
     }
     else
