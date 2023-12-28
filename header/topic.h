@@ -23,7 +23,7 @@ public:
     Topic();
 
     static unordered_map<Categories, string> categories_names;
-
+    Topic &operator++();
     // Getter functions
     int getId() const;
     string getTopicName() const;
@@ -41,7 +41,6 @@ public:
 
     static int findVoteCountForTopic(const Topic *topic);
     static int *findVoteCountForTopicOption(const Topic *topic);
-    
 
 private:
     int id;

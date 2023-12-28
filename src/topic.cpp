@@ -7,10 +7,16 @@ using namespace std;
 Topic::Topic(const string &topicName, const vector<string> &topicOptions, Categories category, bool isOpen)
     : id(Database::topicID), topicName(topicName), topicOptions(topicOptions), category(category), isOpen(isOpen)
 {
-    Database::topicID++;
+    ++(*this);
     Database::topics.push_back(*this);
 }
 Topic::Topic() {}
+
+Topic &Topic::operator++()
+{
+    Database::topicID++;
+    return *this;
+}
 
 unordered_map<Topic::Categories, string> Topic::categories_names = {
     {Topic::TECHNOLOGY, "TECHNOLOGY"},

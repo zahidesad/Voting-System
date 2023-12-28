@@ -22,6 +22,9 @@ public:
     static vector<Topic> topics;
     static int topicID;
 
+    static vector<string> categoryNames;
+    static  vector<vector<string>> topicsForCategoryNames;
+    static string** categoryWithTopicName;
     static Person *login(const string &username, const string &password);
     // Function about person
     static void insertPerson(Person person);
@@ -39,9 +42,8 @@ public:
     static void calculateVoteRate(int Id);
 
     static void setAllIdNumbers();
-    
-    
-
+    static void printTopicsWithCategories();
+    static void initializeCategoryWithTopicName();
 };
 
 #endif

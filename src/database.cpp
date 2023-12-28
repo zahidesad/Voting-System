@@ -804,3 +804,63 @@ void Database::setAllIdNumbers()
     }
     Database::userID = maxForUser + 1;
 }
+
+// I have to use double pointer for my project. Aftr this part is very very unnecessary
+
+vector<string> Database::categoryNames = {Topic::categories_names[Topic::TECHNOLOGY],
+                                          Topic::categories_names[Topic::ECONOMY], Topic::categories_names[Topic::POLITICS],
+                                          Topic::categories_names[Topic::FSMVU]};
+vector<vector<string>> Database::topicsForCategoryNames(Database::categoryNames.size());
+
+string **Database::categoryWithTopicName = new string *[Database::categoryNames.size()];
+
+void Database::initializeCategoryWithTopicName()
+{
+    for (int i = 0; i < Database::categoryNames.size(); i++)
+    {
+        Database::categoryWithTopicName[i] = new std::string[Database::topics.size()];
+    }
+}
+
+void Database::printTopicsWithCategories()
+{
+    for (int i = 0; i < Database::topics.size(); i++)
+    {
+        Topic::Categories topicCategory = Database::topics[i].getCategory();
+
+        if (topicCategory == Topic::TECHNOLOGY)
+        {
+            categoryWithTopicName[Topic::TECHNOLOGY][i] = Database::topics[i].getTopicName();
+        }
+        else if (topicCategory == Topic::ECONOMY)
+        {
+            categoryWithTopicName[Topic::ECONOMY][i] = Database::topics[i].getTopicName();
+        }
+        else if (topicCategory == Topic::POLITICS)
+        {
+            categoryWithTopicName[Topic::POLITICS][i] = Database::topics[i].getTopicName();
+        }
+        else if (topicCategory == Topic::FSMVU)
+        {
+            categoryWithTopicName[Topic::FSMVU][i] = Database::topics[i].getTopicName();
+        }
+    }
+
+    // Test: Print Categor Names
+    for (int i = 0; i < categoryNames.size(); i++)
+    {
+        Color_Green();
+        cout << "\n--------------- " << categoryNames[i] << "---------------\n"
+             << endl;
+        Color_Reset();
+        for (size_t j = 0; j < Database::topics.size(); ++j)
+        {
+            if (!categoryWithTopicName[i][j].empty())
+            {
+                Color_White();
+                cout << "  Topic Name : " << categoryWithTopicName[i][j] << endl;
+                Color_Reset();
+            }
+        }
+    }
+}

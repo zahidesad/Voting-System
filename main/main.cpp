@@ -63,7 +63,8 @@ int Display()
             cout << "5- View your vote rates" << endl;
             cout << "6- Open/close topics for voting" << endl;
             cout << "7- Delete User Account" << endl;
-            cout << "8- Logout" << endl;
+            cout << "8- Show Topics With Categories" << endl;
+            cout << "9- Logout" << endl;
 
             Color_White();
             cout << "\nSelect an option : ";
@@ -219,9 +220,13 @@ int Display()
                 }
 
                 Database::deletePerson(idForDeleteUser);
-
                 break;
+
             case 8:
+                Database::initializeCategoryWithTopicName();
+                Database::printTopicsWithCategories();
+                break;
+            case 9:
                 isLoggedIn = 0;
                 break;
             default:
