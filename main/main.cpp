@@ -17,7 +17,8 @@ void defaultInformation();
 int main()
 {
     defaultInformation();
-    Database::readPerson();
+    Database::readAdmin();
+    Database::readUser();
     Database::setAllIdNumbers();
     Display();
 
@@ -32,7 +33,7 @@ int Display()
 
     while (true)
     {
-        if (isLoggedIn && (instanceof <Admin>(account) || (checkAdmin(account) == 1)))
+        if (isLoggedIn && (instanceof <Admin>(account)))
         {
             Color_Green();
             printf("\n--------- Welcome Admin ---------\n", account->getName());
@@ -193,7 +194,7 @@ int Display()
             case 7:
                 for (int i = 0; i < Database::users.size(); i++)
                 {
-                    if (checkAdmin(Database::users[i]) == 0)
+                    if (instanceof <User>(Database::users[i]))
                     {
                         cout << endl
                              << i << "- Username : " << Database::users[i]->getName() << " / ID of User : " << Database::users[i]->getId();
@@ -204,22 +205,8 @@ int Display()
                 cout << "\nPlease enter the ID of the person  which you want to delete : ";
                 cin >> idForDeleteUser;
                 Color_Reset();
-            returnBack:
-                flagForUser = 0;
-                for (int i = 0; i < Database::votes.size(); i++)
-                {
-                    if (Database::votes[i].getVoter().getId() == idForDeleteUser)
-                    {
-                        flagForUser = 1;
-                        Database::deleteVote(Database::votes[i].getId());
-                    }
-                }
-                if (flagForUser == 1)
-                {
-                    goto returnBack;
-                }
 
-                Database::deletePerson(idForDeleteUser);
+                Database::deleteUser(idForDeleteUser);
                 break;
 
             case 8:
@@ -238,7 +225,7 @@ int Display()
                 break;
             }
         }
-        else if (isLoggedIn && (instanceof <User>(account) || (checkAdmin(account) == 0)))
+        else if (isLoggedIn && (instanceof <User>(account)))
         {
             int switchOption = 0;
             int categoryOption = 0;
@@ -399,7 +386,7 @@ int Display()
                 Color_Reset();
                 getline(cin, mail);
 
-                account = new User(Database::userID, name, username, password, mail, 0);
+                account = new User(Database::userID++, name, username, password, mail);
                 Color_Green();
                 cout << "\nAccount created successfully!\n\n";
                 Color_Reset();
@@ -424,9 +411,9 @@ int Display()
 
 void defaultInformation()
 {
-    // Person *admin = new Admin(0, "Admin", "admin", "123", "admin@gmail.com",1);
-    // Person *user1 = new User(1, "Emirhan", "emirhan", "123", "emirhan@gmail.com",0);
-    // Person *user2 = new User(2, "Asim", "asim", "123", "asim@gmail.com",0);
+    // Admin *admin = new Admin(0, "Admin", "admin", "123", "admin@gmail.com");
+    // User *user1 = new User(1, "Emirhan", "emirhan", "123", "emirhan@gmail.com");
+    // User *user2 = new User(2, "Asim", "asim", "123", "asim@gmail.com");
 
     // About technology
     vector<string> topicOptions1 = {"Yes", "No"}; // Will Baykar Technology company grow this year?

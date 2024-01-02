@@ -3,13 +3,12 @@
 
 #include "person.h"
 
-class User : public Person {
+class User : public Person
+{
 public:
-    User(int id, const string& name, const string& username, const string& password, const string& mail,const int &isAdmin);
+    User(int id, const string &name, const string &username, const string &password, const string &mail);
     User();
     virtual ~User() override {}
-    
 };
-
 
 #endif

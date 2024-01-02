@@ -26,11 +26,14 @@ public:
     static  vector<vector<string>> topicsForCategoryNames;
     static string** categoryWithTopicName;
     static Person *login(const string &username, const string &password);
-    // Function about person
-    static void insertPerson(Person person);
-    static int readPerson();
-    static int deletePerson(const int id);
-    static int updatePersonInformation(const int id, const string &newName, const string &newUsername, const string &newPassword, const string &newMail);
+    // Function about admin
+    static void insertAdmin(Admin Admin);
+    static int readAdmin();
+    //Function about user
+    static void insertUser(User user);
+    static int readUser();
+    static int deleteUser(const int id);
+    static int updateUserInformation(const int id, const string &newName, const string &newUsername, const string &newPassword, const string &newMail);
     // Function about topic
     static void showAllTopics();
     static void deleteTopic(int topicId);

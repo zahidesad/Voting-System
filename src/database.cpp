@@ -36,10 +36,10 @@ Person *Database::login(const string &username, const string &password)
     return nullptr;
 }
 
-// Function about person
-void Database::insertPerson(Person person)
+// Function about admin
+void Database::insertAdmin(Admin admin)
 {
-    ofstream file("../txtFiles/person.txt", ios_base::app);
+    ofstream file("../txtFiles/admin.txt", ios_base::app);
 
     if (!file.is_open())
     {
@@ -47,22 +47,21 @@ void Database::insertPerson(Person person)
         return;
     }
 
-    file << person.getId() << '\n'
-         << person.getName() << '\n'
-         << person.getUsername() << '\n'
-         << person.getPassword() << '\n'
-         << person.getMail() << '\n'
-         << checkAdmin(&person) << '\n';
+    file << admin.getId() << '\n'
+         << admin.getName() << '\n'
+         << admin.getUsername() << '\n'
+         << admin.getPassword() << '\n'
+         << admin.getMail() << '\n';
 
     userCount++;
 
     file.close();
-    cout << "User has been written to the file successfully." << endl;
+    cout << "Admin has been written to the file successfully." << endl;
 }
 
-int Database::readPerson()
+int Database::readAdmin()
 {
-    ifstream file("../txtFiles/person.txt");
+    ifstream file("../txtFiles/admin.txt");
     if (!file.is_open())
     {
         cerr << "Error while opening the file!" << endl;
@@ -72,44 +71,39 @@ int Database::readPerson()
     char chunk[128];
     int lineNum = 0;
     int personCount = 0;
-    Person *person = nullptr;
+    Admin *admin = nullptr;
 
     while (file.getline(chunk, sizeof(chunk)))
     {
         int newline_pos = strcspn(chunk, "\n");
         chunk[newline_pos] = '\0';
 
-        if (lineNum % 6 == 0)
+        if (lineNum % 5 == 0)
         {
-            person = new Person;
-            person->setId(atoi(chunk));
+            admin = new Admin;
+            admin->setId(atoi(chunk));
             lineNum++;
         }
-        else if (lineNum % 6 == 1)
+        else if (lineNum % 5 == 1)
         {
-            person->setName(chunk);
+            admin->setName(chunk);
             lineNum++;
         }
-        else if (lineNum % 6 == 2)
+        else if (lineNum % 5 == 2)
         {
-            person->setUsername(chunk);
+            admin->setUsername(chunk);
             lineNum++;
         }
-        else if (lineNum % 6 == 3)
+        else if (lineNum % 5 == 3)
         {
-            person->setPassword(chunk);
+            admin->setPassword(chunk);
             lineNum++;
         }
-        else if (lineNum % 6 == 4)
+        else if (lineNum % 5 == 4)
         {
-            person->setMail(chunk);
+            admin->setMail(chunk);
             lineNum++;
-        }
-        else if (lineNum % 6 == 5)
-        {
-            checkAdmin(person);
-            lineNum++;
-            Database::users.push_back(person);
+            Database::users.push_back(admin);
             personCount++;
         }
     }
@@ -118,106 +112,167 @@ int Database::readPerson()
     return 0;
 }
 
-int Database::deletePerson(int id)
+// Function about user
+void Database::insertUser(User user)
 {
-    flagForDeleteAndUpdate = false;
-    int checkId = 0;
-    for (int i = 0; i < Database::users.size(); i++)
+    ofstream file("../txtFiles/user.txt", ios_base::app);
+
+    if (!file.is_open())
     {
-        if (instanceof <Admin>(Database::users[i])) // If person is admin don't allow delete own account;
-        {
-            flagForDeleteAndUpdate = true;
-            checkId = Database::users[i]->getId();
-        }
-
-        if (checkId == id)
-        {
-
-            cout << "You are admin! You can't delete your own account" << endl;
-            return 0;
-        }
+        cerr << "Error: Unable to open the file." << std::endl;
+        return;
     }
 
+    file << user.getId() << '\n'
+         << user.getName() << '\n'
+         << user.getUsername() << '\n'
+         << user.getPassword() << '\n'
+         << user.getMail() << '\n';
+
+    userCount++;
+
+    file.close();
+    cout << "User has been written to the file successfully." << endl;
+}
+
+int Database::readUser()
+{
+    ifstream file("../txtFiles/user.txt");
+    if (!file.is_open())
+    {
+        cerr << "Error while opening the file!" << endl;
+        return 1;
+    }
+
+    char chunk[128];
+    int lineNum = 0;
+    int personCount = 0;
+    User *user = nullptr;
+
+    while (file.getline(chunk, sizeof(chunk)))
+    {
+        int newline_pos = strcspn(chunk, "\n");
+        chunk[newline_pos] = '\0';
+
+        if (lineNum % 5 == 0)
+        {
+            user = new User;
+            user->setId(atoi(chunk));
+            lineNum++;
+        }
+        else if (lineNum % 5 == 1)
+        {
+            user->setName(chunk);
+            lineNum++;
+        }
+        else if (lineNum % 5 == 2)
+        {
+            user->setUsername(chunk);
+            lineNum++;
+        }
+        else if (lineNum % 5 == 3)
+        {
+            user->setPassword(chunk);
+            lineNum++;
+        }
+        else if (lineNum % 5 == 4)
+        {
+            user->setMail(chunk);
+            lineNum++;
+            Database::users.push_back(user);
+            personCount++;
+        }
+    }
+    userCount = personCount;
+    file.close();
+    return 0;
+}
+
+int Database::deleteUser(int id)
+{
     if (id < 0 || id >= userID)
     {
         cout << "Please enter a valid number!";
         return 0;
     }
 
-    ifstream file("../txtFiles/person.txt");
+    ifstream file("../txtFiles/user.txt");
     ofstream temp("../txtFiles/temp.txt");
 
     if (!file.is_open() || !temp.is_open())
     {
-        std::cout << "Error while opening the file!";
+        cout << "Error while opening the file!";
         return 1;
     }
 
-    Person *person = nullptr;
+    User *user = nullptr;
     vector<Person *> tempUsers;
+    tempUsers.push_back(Database::users[0]);
     char chunk[128];
     int lineNum = 0;
     bool skipPerson = false;
 
     while (file.getline(chunk, sizeof(chunk)))
     {
-        if (lineNum % 6 == 0)
+        if (lineNum % 5 == 0)
         {
-            person = new Person;
-            person->setId(std::atoi(chunk));
-            if (person->getId() == id)
+            user = new User;
+            user->setId(atoi(chunk));
+            if (user->getId() == id)
             {
                 skipPerson = true;
+                for (auto it = votes.begin(); it != votes.end();)
+                {
+                    if (it->getVoter().getId() == id)
+                    {
+                        it = votes.erase(it);
+                    }
+                    else
+                    {
+                        ++it;
+                    }
+                }
             }
             else
             {
-                temp << person->getId() << "\n";
+                temp << user->getId() << "\n";
             }
             lineNum++;
         }
-        else if (lineNum % 6 == 1)
+        else if (lineNum % 5 == 1)
         {
-            person->setName(chunk);
+            user->setName(chunk);
             if (!skipPerson)
             {
-                temp << person->getName() << "\n";
+                temp << user->getName() << "\n";
             }
             lineNum++;
         }
-        else if (lineNum % 6 == 2)
+        else if (lineNum % 5 == 2)
         {
-            person->setUsername(chunk);
+            user->setUsername(chunk);
             if (!skipPerson)
             {
-                temp << person->getUsername() << "\n";
+                temp << user->getUsername() << "\n";
             }
             lineNum++;
         }
-        else if (lineNum % 6 == 3)
+        else if (lineNum % 5 == 3)
         {
-            person->setPassword(chunk);
+            user->setPassword(chunk);
             if (!skipPerson)
             {
-                temp << person->getPassword() << "\n";
+                temp << user->getPassword() << "\n";
             }
             lineNum++;
         }
-        else if (lineNum % 6 == 4)
+        else if (lineNum % 5 == 4)
         {
-            person->setMail(chunk);
+            user->setMail(chunk);
             if (!skipPerson)
             {
-                temp << person->getMail() << "\n";
-            }
-            lineNum++;
-        }
-        else if (lineNum % 6 == 5)
-        {
-            checkAdmin(person);
-            if (!skipPerson)
-            {
-                temp << checkAdmin(person) << "\n";
-                tempUsers.push_back(person);
+                temp << user->getMail() << "\n";
+                tempUsers.push_back(user);
             }
             skipPerson = false;
             lineNum++;
@@ -227,22 +282,22 @@ int Database::deletePerson(int id)
     file.close();
     temp.close();
 
-    std::remove("../txtFiles/person.txt");
-    std::rename("../txtFiles/temp.txt", "../txtFiles/person.txt");
+    std::remove("../txtFiles/user.txt");
+    std::rename("../txtFiles/temp.txt", "../txtFiles/user.txt");
 
     // Update users vector
     Database::users = tempUsers;
     userCount = tempUsers.size();
 
-    std::cout << "\nUsers has been deleted successfully\n";
+    cout << "\nUsers has been deleted successfully\n";
 
     return 0;
 }
 
-int Database::updatePersonInformation(const int id, const string &newName, const string &newUsername, const string &newPassword, const string &newMail)
+int Database::updateUserInformation(const int id, const string &newName, const string &newUsername, const string &newPassword, const string &newMail)
 
 {
-    if (id < 0 || id >= users.size())
+    if (id < 0 || id >= userID)
     {
         Color_Red();
         printf("Please enter a valid number!");
@@ -250,10 +305,10 @@ int Database::updatePersonInformation(const int id, const string &newName, const
         return 0;
     }
 
-    Database::deletePerson(id);
+    Database::deleteUser(id);
     if (!flagForDeleteAndUpdate)
     {
-        Person person(id, newName, newUsername, newPassword, newMail, 0);
+        User *user = new User(id, newName, newUsername, newPassword, newMail);
     }
 }
 
@@ -806,19 +861,16 @@ void Database::setAllIdNumbers()
 }
 
 // I have to use double pointer for my project. Aftr this part is very very unnecessary
-
 vector<string> Database::categoryNames = {Topic::categories_names[Topic::TECHNOLOGY],
                                           Topic::categories_names[Topic::ECONOMY], Topic::categories_names[Topic::POLITICS],
                                           Topic::categories_names[Topic::FSMVU]};
 vector<vector<string>> Database::topicsForCategoryNames(Database::categoryNames.size());
-
 string **Database::categoryWithTopicName = new string *[Database::categoryNames.size()];
-
 void Database::initializeCategoryWithTopicName()
 {
     for (int i = 0; i < Database::categoryNames.size(); i++)
     {
-        Database::categoryWithTopicName[i] = new std::string[Database::topics.size()];
+        Database::categoryWithTopicName[i] = new string[Database::topics.size()];
     }
 }
 

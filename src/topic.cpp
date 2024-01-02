@@ -34,6 +34,40 @@ int Topic::getOptionLength() const
     return totalOptions;
 }
 
+int Topic::findVoteCountForTopic(const Topic *topic)
+{
+    int total = 0;
+
+    for (const auto &vote : Database::votes)
+    {
+        if (vote.getTopic().getId() == topic->getId())
+        {
+            total++;
+        }
+    }
+    return total;
+}
+
+int *Topic::findVoteCountForTopicOption(const Topic *topic)
+{
+    int *total = (int *)malloc(topic->getOptionLength() * sizeof(int));
+
+    for (int i = 0; i < topic->getOptionLength(); i++)
+    {
+        total[i] = 0;
+    }
+
+    for (int i = 0; i < Database::votes.size(); i++)
+    {
+        if (Database::votes[i].getTopic().getId() == (topic->getId()))
+        {
+            total[Database::votes[i].getTopicOptionIndex()]++;
+        }
+    }
+
+    return total;
+}
+
 // Getter functions
 int Topic::getId() const
 {
@@ -84,38 +118,4 @@ void Topic::setIsOpen(bool newIsOpen)
 void Topic::setCategory(Categories newCategory)
 {
     category = newCategory;
-}
-
-int Topic::findVoteCountForTopic(const Topic *topic)
-{
-    int total = 0;
-
-    for (const auto &vote : Database::votes)
-    {
-        if (vote.getTopic().getId() == topic->getId())
-        {
-            total++;
-        }
-    }
-    return total;
-}
-
-int *Topic::findVoteCountForTopicOption(const Topic *topic)
-{
-    int *total = (int *)malloc(topic->getOptionLength() * sizeof(int));
-
-    for (int i = 0; i < topic->getOptionLength(); i++)
-    {
-        total[i] = 0;
-    }
-
-    for (int i = 0; i < Database::votes.size(); i++)
-    {
-        if (Database::votes[i].getTopic().getId() == (topic->getId()))
-        {
-            total[Database::votes[i].getTopicOptionIndex()]++;
-        }
-    }
-
-    return total;
 }
