@@ -8,7 +8,6 @@
 #include "vote.h"
 #include "../Colors/color.h"
 #include <vector>
-
 class Database
 {
 public:
@@ -23,13 +22,13 @@ public:
     static int topicID;
 
     static vector<string> categoryNames;
-    static  vector<vector<string>> topicsForCategoryNames;
-    static string** categoryWithTopicName;
+    static vector<vector<string>> topicsForCategoryNames;
+    static string **categoryWithTopicName;
     static Person *login(const string &username, const string &password);
     // Function about admin
     static void insertAdmin(Admin Admin);
     static int readAdmin();
-    //Function about user
+    // Function about user
     static void insertUser(User user);
     static int readUser();
     static int deleteUser(const int id);

@@ -3,12 +3,14 @@
 
 #include "person.h"
 
-class Admin : public Person {
+class Admin : public Person
+{
+private:
+    bool deleteAllDataFlag;
 public:
-    Admin(int id, const string& name, const string& username, const string& password, const string& mail);
+    Admin(int id, const string &name, const string &username, const string &password, const string &mail);
     Admin();
-
-   
+    friend bool deleteAllData(Admin &admin);
 };
 
 #endif

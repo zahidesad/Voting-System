@@ -13,7 +13,7 @@ private:
     string username;
     string password;
     string mail;
-
+      
 public:
     Person(int id, const string &name, const string &username, const string &password, const string &mail);
     Person();
@@ -32,6 +32,5 @@ public:
     void setPassword(const string &newPassword);
     void setMail(const string &newMail);
 };
-
 
 #endif

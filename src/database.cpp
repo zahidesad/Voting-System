@@ -190,7 +190,7 @@ int Database::readUser()
 
 int Database::deleteUser(int id)
 {
-    if (id < 0 || id >= userID)
+    if (id <= 0 || id >= userID)
     {
         cout << "Please enter a valid number!";
         return 0;

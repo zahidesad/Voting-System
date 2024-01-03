@@ -13,6 +13,7 @@ using namespace std;
 
 int Display();
 void defaultInformation();
+void deleteAllData();
 
 int main()
 {
@@ -54,6 +55,8 @@ int Display()
             int idVoteRate = 0;
             int idForOpenStatus = 0;
             int idForDeleteUser = 0;
+            Admin *admin;
+            int deleteChoice;
 
             Topic topic;
 
@@ -65,7 +68,8 @@ int Display()
             cout << "6- Open/close topics for voting" << endl;
             cout << "7- Delete User Account" << endl;
             cout << "8- Show Topics With Categories" << endl;
-            cout << "9- Logout" << endl;
+            cout << "9- Destroy The System (Not Recommended)" << endl;
+            cout << "10- Logout" << endl;
 
             Color_White();
             cout << "\nSelect an option : ";
@@ -214,6 +218,38 @@ int Display()
                 Database::printTopicsWithCategories();
                 break;
             case 9:
+                Color_Red();
+                cout << "Do you really want to delete all data. This action cannot be undone." << endl;
+                Color_Reset();
+                cout << "1- Yes" << endl
+                     << "2- No" << endl
+                     << endl;
+
+                Color_White();
+                cout << "Your choice : ";
+                Color_Reset();
+                cin >> deleteChoice;
+                admin = static_cast<Admin *>(account);
+                if (deleteAllData(*admin) && deleteChoice == 1)
+                {
+                    // Delete all votes
+                    Database::votes.clear();
+                    // Delete all topics
+                    Database::topics.clear();
+                    // Delete all users
+                    Database::users.clear();
+                    std::ofstream file1("../txtFiles/user.txt", std::ofstream::out | std::ofstream::trunc);
+                    // Delete admin
+                    std::ofstream file2("../txtFiles/admin.txt", std::ofstream::out | std::ofstream::trunc);
+                    file1.close();
+                    file2.close();
+                    Color_Red();
+                    cout << "THE ENTIRE SYSTEM HAS BEEN DESTROYED";
+                    Color_Reset();
+                    isLoggedIn = 0;
+                }
+                break;
+            case 10:
                 isLoggedIn = 0;
                 break;
             default:
@@ -438,4 +474,13 @@ void defaultInformation()
     Topic topic5("Who will win this year's elections?", topicOptions5, Topic::POLITICS, 1);
 
     Topic topic6("Will the rector of FSMVU change this year?", topicOptions6, Topic::FSMVU, 1);
+}
+
+bool deleteAllData(Admin &admin)
+{
+    if (!admin.deleteAllDataFlag)
+    {
+        admin.deleteAllDataFlag = true;
+    }
+    return admin.deleteAllDataFlag;
 }
