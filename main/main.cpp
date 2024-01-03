@@ -447,9 +447,9 @@ int Display()
 
 void defaultInformation()
 {
-    // Admin *admin = new Admin(0, "Admin", "admin", "123", "admin@gmail.com");
-    // User *user1 = new User(1, "Emirhan", "emirhan", "123", "emirhan@gmail.com");
-    // User *user2 = new User(2, "Asim", "asim", "123", "asim@gmail.com");
+    Admin *admin = new Admin(0, "Admin", "admin", "123", "admin@gmail.com");
+    User *user1 = new User(1, "Emirhan", "emirhan", "123", "emirhan@gmail.com");
+    User *user2 = new User(2, "Asim", "asim", "123", "asim@gmail.com");
 
     // About technology
     vector<string> topicOptions1 = {"Yes", "No"}; // Will Baykar Technology company grow this year?

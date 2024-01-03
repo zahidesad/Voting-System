@@ -604,9 +604,16 @@ void Database::voteOperation(Person *account)
         cin >> optionIndex;
         for (int i = 0; i < Database::topics.size(); i++)
         {
-            if (Database::topics[i].getId() == topicId && Database::topics[i].getCategory() == Topic::Categories::TECHNOLOGY)
+            if (Database::topics[i].getId() == topicId && Database::topics[i].getCategory() == Topic::Categories::TECHNOLOGY && Database::topics[i].getIsOpen() == 1)
             {
                 createVote(Database::voteID, *account, Database::topics[i], optionIndex - 1);
+                break;
+            }
+            else
+            {
+                Color_Red();
+                cout << "Invalid operation!!!" << endl;
+                Color_Reset();
                 break;
             }
         }
@@ -662,9 +669,16 @@ void Database::voteOperation(Person *account)
         cin >> optionIndex;
         for (int i = 0; i < Database::topics.size(); i++)
         {
-            if (Database::topics[i].getId() == topicId && Database::topics[i].getCategory() == Topic::Categories::ECONOMY)
+            if (Database::topics[i].getId() == topicId && Database::topics[i].getCategory() == Topic::Categories::ECONOMY && Database::topics[i].getIsOpen() == 1)
             {
                 createVote(Database::voteID, *account, Database::topics[i], optionIndex - 1);
+                break;
+            }
+            else
+            {
+                Color_Red();
+                cout << "Invalid operation!!!" << endl;
+                Color_Reset();
                 break;
             }
         }
@@ -721,9 +735,16 @@ void Database::voteOperation(Person *account)
         cin >> optionIndex;
         for (int i = 0; i < Database::topics.size(); i++)
         {
-            if (Database::topics[i].getId() == topicId && Database::topics[i].getCategory() == Topic::Categories::POLITICS)
+            if (Database::topics[i].getId() == topicId && Database::topics[i].getCategory() == Topic::Categories::POLITICS && Database::topics[i].getIsOpen() == 1)
             {
                 createVote(Database::voteID, *account, Database::topics[i], optionIndex - 1);
+                break;
+            }
+            else
+            {
+                Color_Red();
+                cout << "Invalid operation!!!" << endl;
+                Color_Reset();
                 break;
             }
         }
@@ -780,9 +801,16 @@ void Database::voteOperation(Person *account)
         cin >> optionIndex;
         for (int i = 0; i < Database::topics.size(); i++)
         {
-            if (Database::topics[i].getId() == topicId && Database::topics[i].getCategory() == Topic::Categories::FSMVU)
+            if (Database::topics[i].getId() == topicId && Database::topics[i].getCategory() == Topic::Categories::FSMVU && Database::topics[i].getIsOpen() == 1)
             {
                 createVote(Database::voteID, *account, Database::topics[i], optionIndex - 1);
+                break;
+            }
+            else
+            {
+                Color_Red();
+                cout << "Invalid operation!!!" << endl;
+                Color_Reset();
                 break;
             }
         }
