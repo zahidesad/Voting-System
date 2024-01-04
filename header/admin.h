@@ -10,6 +10,7 @@ private:
 public:
     Admin(int id, const string &name, const string &username, const string &password, const string &mail);
     Admin();
+    virtual ~Admin() override {}
     friend bool deleteAllData(Admin &admin);
 };
 
