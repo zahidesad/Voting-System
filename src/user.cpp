@@ -8,3 +8,14 @@ User::User(int id, const string &name, const string &username, const string &pas
 }
 
 User::User() {}
+
+void printVotedTopic(User user)
+{
+    for (int i = 0; i < Database::votes.size(); i++)
+    {
+        if (Database::votes[i].getVoter().getId() == user.getId())
+        {
+            cout << i + 1 << ") " << Database::votes[i].getTopic().getTopicName() << endl;
+        }
+    }
+}

@@ -277,6 +277,7 @@ int Display()
             string newUsername;
             string newPassword;
             string newMail;
+            User *user;
 
             Color_Green();
             cout << "\n--------- Welcome " << account->getName() << " --------- " << endl;
@@ -286,7 +287,8 @@ int Display()
             cout << "2- Update user information" << endl;
             cout << "3- Vote for a topic" << endl;
             cout << "4- View vote rates" << endl;
-            cout << "5- Logout" << endl;
+            cout << "5- View topics you have previously voted on" << endl;
+            cout << "6- Logout" << endl;
 
             Color_White();
             cout << "\nSelect an option : ";
@@ -347,6 +349,10 @@ int Display()
                 Database::calculateVoteRate(idRateOfVotes);
                 break;
             case 5:
+                user = static_cast<User *>(account);
+                printVotedTopic(*user);
+                break;
+            case 6:
                 isLoggedIn = 0;
                 break;
             }
